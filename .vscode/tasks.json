@@ -1,0 +1,41 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "type": "shell",
+    "tasks": [
+        {
+            "label": "发布中文版",
+            "command": "chcp 65001 && \"${workspaceRoot}/build/luabuild/lua.exe\"",
+            "args": [
+                ".\\build\\execute.lua",
+                ".\\build\\make.lua",
+                "zhCN"
+            ]
+        },
+        {
+            "label": "发布英文版",
+            "command": "chcp 65001 && \"${workspaceRoot}/build/luabuild/lua.exe\"",
+            "args": [
+                ".\\build\\execute.lua",
+                ".\\build\\make.lua",
+                "enUS"
+            ]
+        },
+        {
+            "label": "编译C++代码",
+            "command": "chcp 65001 && \"${workspaceRoot}/build/luabuild/lua.exe\"",
+            "args": [
+                ".\\build\\execute.lua",
+                ".\\build\\compile_cpp.lua"
+            ]
+        },
+        {
+            "label": "预处理",
+            "command": "chcp 65001 && \"${workspaceRoot}/bin/w3x2lni-lua.exe\"",
+            "args": [
+                ".\\build\\prebuild.lua"
+            ]
+        }
+    ]
+}

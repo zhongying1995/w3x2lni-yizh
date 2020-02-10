@@ -1,0 +1,7 @@
+[Rhac]
+Art=ReplaceableTextures\CommandButtons\BTNStoneArchitecture.blp
+Buttonpos=1
+Hotkey=M
+Name=防御塔升级
+Tip=,
+Ubertip=,

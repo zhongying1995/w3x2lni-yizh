@@ -1,0 +1,12 @@
+[AOr3]
+Art=ReplaceableTextures\PassiveButtons\PASBTNReincarnation.blp
+Buttonpos=3,2
+EffectArt=Abilities\Spells\Orc\Reincarnation\ReincarnationTarget.mdl
+Name=Name
+ResearchArt=ReplaceableTextures\CommandButtons\BTNReincarnation.blp
+Researchbuttonpos=3
+Researchhotkey=R
+Researchtip=Researchtip
+Researchubertip=Researchubertip
+Tip=Tip
+Ubertip=Ubertip

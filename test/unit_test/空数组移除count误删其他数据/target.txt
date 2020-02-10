@@ -1,0 +1,7 @@
+[R000]
+Art=ReplaceableTextures\CommandButtons\BTNPackBeast.blp
+Buttonpos=3
+Hotkey=B
+Name=测试
+Tip=标题
+Ubertip=文本

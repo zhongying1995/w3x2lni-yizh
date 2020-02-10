@@ -1,0 +1,90 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "前端",
+            "type": "lua",
+            "request": "launch",
+            "stopOnEntry": false,
+            "cwd": "${workspaceRoot}\\script\\",
+            "env": {
+                "PATH": "${workspaceRoot}\\bin\\"
+            },
+            "luadll": "${workspaceRoot}\\bin\\lua53.dll",
+            "path": ".\\?.lua;.\\?\\init.lua",
+            "cpath": "${workspaceRoot}\\bin\\?.dll;",
+            "runtimeExecutable": "${workspaceRoot}\\bin\\w3x2lni-lua.exe",
+            "runtimeArgs": "${workspaceRoot}\\script\\gui\\new\\main.lua",
+            "consoleCoding": "utf8",
+            "program": "${workspaceRoot}\\script\\gui\\new\\main.lua"
+        },
+        {
+            "name": "后端",
+            "type": "lua",
+            "request": "launch",
+            "cwd": "${workspaceRoot}\\script\\",
+            "env": {
+                "PATH": "${workspaceRoot}\\bin\\"
+            },
+            "luaexe": "${workspaceRoot}\\bin\\w3x2lni-lua.exe",
+            "luadll": "${workspaceRoot}\\bin\\lua53.dll",
+            "path": ".\\?.lua;.\\?\\init.lua",
+            "cpath": "${workspaceRoot}\\bin\\?.dll;",
+            "consoleCoding": "utf8",
+            "program": "${workspaceRoot}\\script\\backend\\init.lua",
+            "sourceCoding": "utf8",
+            "arg0": [
+                "-e",
+                "_W2L_MODE='CLI';_W2L_DIR=[[${workspaceRoot}]]"
+            ],
+            "arg": [
+                "slk"
+            ]
+        },
+        {
+            "name": "单元测试",
+            "type": "lua",
+            "request": "launch",
+            "cwd": "${workspaceRoot}\\script\\",
+            "env": {
+                "PATH": "${workspaceRoot}\\bin\\"
+            },
+            "luaexe": "${workspaceRoot}\\bin\\w3x2lni-lua.exe",
+            "luadll": "${workspaceRoot}\\bin\\lua53.dll",
+            "path": ".\\?.lua;.\\?\\init.lua",
+            "cpath": "${workspaceRoot}\\bin\\?.dll;",
+            "consoleCoding": "utf8",
+            "program": "${workspaceRoot}\\test\\unit_test.lua",
+            "sourceCoding": "utf8",
+            "arg0": [],
+            "arg": []
+        },
+        {
+            "name": "MiniGui",
+            "type": "lua",
+            "request": "launch",
+            "cwd": "${workspaceRoot}\\script\\",
+            "env": {
+                "PATH": "${workspaceRoot}\\bin\\"
+            },
+            "luaexe": "${workspaceRoot}\\bin\\w3x2lni-lua.exe",
+            "luadll": "${workspaceRoot}\\bin\\lua53.dll",
+            "path": ".\\?.lua;.\\?\\init.lua",
+            "cpath": "${workspaceRoot}\\bin\\?.dll;",
+            "consoleCoding": "utf8",
+            "program": "${workspaceRoot}\\script\\gui\\mini.lua",
+            "sourceCoding": "utf8",
+            "arg": [
+                "lni",
+                "${workspaceRoot}\\2.w3x",
+            ]
+        },
+        {
+            "name": "TestAttach",
+            "type": "lua",
+            "request": "attach",
+            "consoleCoding": "utf8",
+            "processName" : "w3x2lni-lua.exe"
+        },
+    ]
+}
