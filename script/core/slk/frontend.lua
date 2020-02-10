@@ -318,7 +318,13 @@ return function(w2l_, slk)
         objs.unit = {}
         local list = {}
         for count, name in ipairs(filenames) do
-            name = check_mdx_file_second_power(w2l, name)
+            --检测二进制错误
+            local error, new_name = pcall( check_mdx_file_second_power, w2l, name )
+            if error then
+                name = new_name
+            else
+                Log.error('检测二进制贴图时，发现错误：', name)
+            end
             local id = get_temp_id()
             local obj = {
                 _id= id,
