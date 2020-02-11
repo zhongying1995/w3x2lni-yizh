@@ -83,8 +83,8 @@ end
 
 ---搜索文件 function
 search_file = function(filename)
-    if input_archive:has_file(filename) then
-        if not is_has(filename) then
+    if not is_has(filename) then
+        if input_archive:has_file(filename) then
             add_file(filename)
 
             --通用分析
@@ -150,32 +150,79 @@ local function scan_defined_list_files()
     end
 end
 
+local san_lua_file
+san_lua_file = function( filename )
+    filename = filename .. '.lua'
+    Log.info('尝试搜索lua文件', filename)
+    if not is_has(filename) then
+        if input_archive:has_file(filename) then
+            Log.info('找到lua文件', filename)
+            local buf = input_archive:get(filename)
+            --分析特效
+            --格式一
+            for str in buf:gmatch('%[%[.-%]%]') do
+                scan_file(str)
+            end
 
---搜索lua文件
-local function san_lua_list_files()
-    local buf
-    local jass = { 'war3map.j','Scripts\\war3map.j' }
-    for _, name in ipairs(jass) do
-        if input_archive:has_file(name) then
-            buf = input_archive:get(name)
-            break
-        end
-    end
+            --格式二
+            for str in buf:gmatch('"".-""') do
+                str = str:gsub('\\\\', '\\')
+                scan_file(str)
+            end
 
-    if buf then
-        local lua_find
+            --格式三
+            for str in buf:gmatch("''.-''") do
+                str = str:gsub('\\\\', '\\')
+                scan_file(str)
+            end
 
-        for str in buf:gmatch('Cheat[%s]*%([%s]*"($1)"[%s]*%)') do
-            Log.info(str)
-            lua_find = true
-        end
-
-        --搜索一下内置
-        if not lua_find then
-            if input_archive:has_file('callback') then
-                
+            --分析require
+            for str in buf:gmatch('require.-\n') do
+                local s
+                if str:find("'") then
+                    s = str:match("'(.-)'")
+                elseif str:find('"') then
+                    s = str:match('"().-)"')
+                else
+                    s = str:match('%[%[(.-)%]%]')
+                end
+                if s then
+                    s = s:gsub('%.', '\\')
+                    san_lua_file(s)
+                else
+                    Log.info('未知的require类型：', str)
+                end
+            end
+            for str in buf:gmatch('reload.-\n') do
+                local s
+                if str:find("'") then
+                    s = str:match("'(.-)'")
+                elseif str:find('"') then
+                    s = str:match('"().-)"')
+                else
+                    s = str:match('%[%[(.-)%]%]')
+                end
+                if s then
+                    s = s:gsub('%.', '\\')
+                    san_lua_file(s)
+                else
+                    Log.info('未知的reload类型：', str)
+                end
             end
         end
+    end
+    if filename:sub(1, 6) ~= 'script' then
+        san_lua_file( 'scripts\\' .. filename:sub(1, -5) )
+        san_lua_file( 'scripts\\map\\' .. filename:sub(1, -5) )
+        san_lua_file( 'script\\' .. filename:sub(1, -5) )
+        san_lua_file( 'script\\map\\' .. filename:sub(1, -5) )
+    end
+end
+
+--在j文件中搜索lua文件
+local function san_lua_list_files()
+    for _, name in ipairs({ 'main', 'base', }) do
+        san_lua_file(name)
     end
 end
 
@@ -196,7 +243,7 @@ return function ( _w2l, _input_archive )
     w2l.messager.text('还原listfile：开始')
 
     scan_defined_list_files()
-    san_lua_list_files()
+    -- san_lua_list_files()
 
     local list = {}
     for name in pairs(listfile) do
