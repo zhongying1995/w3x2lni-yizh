@@ -204,8 +204,8 @@ local id_index = 1
 local function get_temp_id( )
     local index = id_index
 	index = index - 1
-	local b = math_floor( index / len )
     local c = math_floor( index / len / len )
+	local b = math_floor( (index - c*len*len) / len )
     local a = index - b * len - c*len*len
 	a = a + 1
     b = b + 1
